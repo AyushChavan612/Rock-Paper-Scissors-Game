@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+    <style>
+        .sub-button {
+            background-color: black;
+            color: white;
+            border-radius: 25%;
+            height: 40px;
+            width: 100px;
+        }
+
+        .changed {
+            background-color: white;
+            color: black; /* Added this to make text visible on white background */
+        }
+    </style>
+</head>
+<body>
+    <p>Youtube Subscribe Button</p>
+    <button class="sub-button" onclick="
+        let button = document.querySelector('button');
+        let value = button.innerHTML;
+        if (value === 'Subscribe') {
+            button.innerHTML = 'Subscribed';
+            button.classList.add('changed');
+            // button.classList.remove('sub-button');
+        } else {
+            button.innerHTML = 'Subscribe';
+            button.classList.remove('changed');
+        }
+    ">Subscribe</button>
+    <p></p>
+    <p>Rock Paper Scissors Game</p>
+    <a href="Game.Html">Click Here</a>
+    <p></p>
+    <p>Amazon Shipping Calculator</p>
+    <p>Order below $40 will require extra $10 for shipping</p>
+    <p>Order above $40 will have free shipping</p>
+    <input type="text" class="textBox" placeholder="Total Amount" onkeydown="
+    fun(event);
+  ">
+    <button>Calculate</button>
+    <p class="ans"></p>
+
+    <script>
+        function fun(event) {
+           let cost = document.querySelector('.textBox').value;
+           cost = parseInt(cost);
+           if (!isNaN(cost) && event.key === 'Enter') {
+               if (cost <= 40) cost += 10;
+               document.querySelector('.ans').innerHTML = 'Total cost: $' + cost;
+           } else {
+               document.querySelector('.ans').innerHTML = 'Please enter a valid number';
+           }
+        }
+    </script>
+    
+</body>
+</html>

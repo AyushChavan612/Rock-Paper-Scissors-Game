@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper & Scissors</title>
+    <style>
+        *{
+            cursor: pointer;
+        }
+        body{
+            background-color: black;
+            margin-left: 30px;
+            color: white;
+            font-size: 30px;
+        }
+        .textCss {
+            color: white;
+            font-weight: 900;
+            font-size: 50px;
+        }
+        .button_style {
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            background-color: black;
+            border-color: rgb(255, 255, 255);
+            border-width: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <p class = "textCss">Rock, Paper & Scissors</p>
+    <button class="button_style" onclick="fun('Rock')">     
+        <img height="60px" width="60px" src="./rock-emoji.png" alt="">
+     </button>
+    <button class="button_style" onclick="fun('Paper')">
+        <img height="60px" width="60px" src="./paper-emoji.png" alt="">
+    </button>
+    <button class="button_style" onclick="fun('Scissors')">
+        <img height="60px" width="60px" src="./scissors-emoji.png" alt="">
+    </button>
+    <p class="conclusion"></p>
+    <p class="Moves" style="margin-top: 5px;"></p>
+    <p class="result"></p>
+    <button style="height: 30px; width: 200px; font-size: 20px;" onclick="
+            score.win = 0;
+            score.lose = 0;
+            score.tie = 0;
+        localStorage.setItem('s', JSON.stringify(score));
+        document.querySelector('.result').innerText = `Win: 0 Lose: 0 Tie: 0`;
+    ">Reset Score</button>
+
+    <script>
+        let score = JSON.parse(localStorage.getItem('s'));
+        if (score === null) {
+            score = {
+                win: 0,
+                lose: 0,
+                tie: 0
+            };
+        }
+
+        function printMoves (your , computer) {
+            let obj = document.querySelector('.Moves');
+            if(your === 'rock') {
+                if(computer === 'rock') {
+                     obj.innerHTML = 'Your  <img height="50px" width="50px" src="./rock-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./rock-emoji.png" alt="">';
+                }
+                else if(computer === 'paper') {
+                    obj.innerHTML = 'Your  <img height="50px" width="50px" src="./rock-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./paper-emoji.png" alt="">';
+                }
+                else {
+                    obj.innerHTML = 'Your  <img height="50px" width="50px" src="./rock-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./scissors-emoji.png" alt="">';
+                }
+            }
+            else if(your === 'paper') {
+                if(computer === 'rock') {
+                     obj.innerHTML = 'Your  <img height="50px" width="50px" src="./paper-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./rock-emoji.png" alt="">';
+                }
+                else if(computer === 'paper') {
+                    obj.innerHTML = 'Your  <img height="50px" width="50px" src="./paper-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./paper-emoji.png" alt="">';
+                }
+                else {
+                    obj.innerHTML = 'Your  <img height="50px" width="50px" src="./paper-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./scissors-emoji.png" alt="">';
+                }
+            }
+            else {
+                if(computer === 'rock') {
+                     obj.innerHTML = 'Your  <img height="50px" width="50px" src="./scissors-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./rock-emoji.png" alt="">';
+                }
+                else if(computer === 'paper') {
+                    obj.innerHTML = 'Your  <img height="50px" width="50px" src="./scissors-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./paper-emoji.png" alt="">';
+                }
+                else {
+                    obj.innerHTML = 'Your  <img height="50px" width="50px" src="./scissors-emoji.png" alt="">  Computer <img height="50px" width="50px" src="./scissors-emoji.png" alt="">';
+                }
+            }
+        }
+         
+        function fun(Move) {
+            let compMove = Math.random();
+            let comp;
+            if (compMove < 1/3) comp = 'Rock';
+            else if (compMove >= 1/3 && compMove < 2/3) comp = 'Paper';
+            else comp = 'Scissors';
+
+            let conclutext = document.querySelector('.conclusion');
+            conclutext.classList.add('textCss');
+
+            if (Move === 'Rock') {
+                if (comp === 'Rock') score.tie++ , conclutext.innerText = 'Tie' , printMoves('rock' ,'rock');
+                else if (comp === 'Paper') score.lose++ , conclutext.innerText = 'Lose' , printMoves('rock' ,'paper');
+                else score.win++ , conclutext.innerText = 'Win' , printMoves('rock' ,'scissors');
+            } else if (Move === 'Paper') {
+                if (comp === 'Rock') score.win++ , conclutext.innerText = 'Win' , printMoves('paper' , 'rock');
+                else if (comp === 'Paper') score.tie++ , conclutext.innerText = 'Tie' , printMoves('paper' , 'paper');
+                else score.lose++ , conclutext.innerText = 'Lose' , printMoves('paper' , 'scissors');
+            } else {
+                if (comp === 'Rock') score.lose++ , conclutext.innerText = 'Lose' , printMoves('scissors' , 'rock');
+                else if (comp === 'Paper') score.win++ , conclutext.innerText = 'Win' ,  printMoves('scissors' , 'paper');
+                else score.tie++ , conclutext.innerText = 'Tie' ,  printMoves('scissors' , 'scissors');
+            }
+
+            document.querySelector('.result').innerText = `Win: ${score.win} Lose: ${score.lose} Tie: ${score.tie}`;
+            localStorage.setItem('s', JSON.stringify(score));
+        }
+    </script>
+    
+</body>
+</html>
